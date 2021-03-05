@@ -1,0 +1,22 @@
+{
+  "name": "sapper-netlify",
+  "version": "0.0.4",
+  "description": "Create a sapper project that renders with netlify functions.",
+  "main": "index.js",
+  "bin": {
+    "sapper-netlify": "bin.js"
+  },
+  "scripts": {
+    "cli": "rm -rf my-app; sapper-netlify",
+    "test": "yarn cli; cd my-app; yarn install; yarn build-netlify; cd .."
+  },
+  "keywords": [
+    "sapper",
+    "netlify",
+    "function",
+    "lambda",
+    "ssr"
+  ],
+  "author": "Noah Versace Salvi",
+  "license": "MIT"
+}
