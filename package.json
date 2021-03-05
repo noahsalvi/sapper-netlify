@@ -3,7 +3,7 @@
   "version": "0.0.5",
   "description": "Create a sapper project that renders with netlify functions.",
   "bin": {
-    "sapper-netlify": "./bin.js"
+    "sapper-netlify": "bin.js"
   },
   "scripts": {
     "cli": "rm -rf my-app; sapper-netlify",
