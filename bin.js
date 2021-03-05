@@ -41,7 +41,7 @@ async function run() {
 function installSapper() {
   const projectName = args[0] === "." ? currentDirectoryName : args[0];
 
-  return exec(`npx degit "sveltejs/sapper-template#rollup" ${projectName}`);
+  return exec(`npx degit "sveltejs/sapper-template#rollup" ${args[0]}`);
 }
 
 function addBuildNetlifyScript() {
