@@ -6,7 +6,7 @@
     "sapper-netlify": "bin.js"
   },
   "scripts": {
-    "cli": "rm -rf my-app; sapper-netlify",
+    "start": "rm -rf my-app; sapper-netlify",
     "test": "yarn cli; cd my-app; yarn install; yarn build-netlify; cd .."
   },
   "keywords": [
@@ -17,5 +17,7 @@
     "ssr"
   ],
   "author": "Noah Versace Salvi",
+  "repository": "https://github.com/noahsalvi/sapper-netlify",
+  "homepage": "https://github.com/noahsalvi/sapper-netlify#readme",
   "license": "MIT"
 }

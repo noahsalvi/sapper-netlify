@@ -93,6 +93,7 @@ function addPkgDependencies() {
   const packageJSON = JSON.parse(fs.readFileSync(pkgJSONPath, "utf8"));
   packageJSON.dependencies = Object.assign(packageJSON.dependencies, {
     "serverless-http": "^2.7.0",
+    encoding: "0.1.13",
   });
 
   // Add script for checking
