@@ -2,7 +2,7 @@
 
 Create a sapper project that can run on a netlify function.
 
-### Usage
+## Usage
 
 Generate the project
 
@@ -10,8 +10,12 @@ Generate the project
 npx sapper-netlify project-name
 ```
 
-or
+or in the same folder
 
 ```bash
 npx sapper-netlify .
 ```
+
+## Examples
+
+[Sapper Netlify with Sotion](https://sapper-using-functions.netlify.app/)
