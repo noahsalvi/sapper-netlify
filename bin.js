@@ -8,16 +8,16 @@ const args = process.argv.slice(2, process.argv.length);
 const projectPath = args[0] === "." ? "./" : args[0];
 const assets = path.join(__dirname, "assets");
 
-if (!args[0]) {
-  console.log(
-    "😓 You need to specify a path: e.g. npx sapper-netlify my-app 😓"
-  );
-  process.exit();
-}
-
 run();
 
 async function run() {
+  if (!args[0]) {
+    console.log(
+      "😓 You need to specify a path: e.g. npx sapper-netlify my-app 😓"
+    );
+    process.exit();
+  }
+
   console.log("✨ Thanks for choosing sapper-netlify ✨");
 
   await installSapper();
@@ -28,6 +28,8 @@ async function run() {
 
   addNetlifyToml();
 
+  addFunctionBuildToGitignore();
+
   addRedirects();
 
   addPkgScript();
@@ -35,6 +37,13 @@ async function run() {
   addBuildNetlifyScript();
 
   modifyServer();
+}
+
+function addFunctionBuildToGitignore() {
+  const gitignorePath = path.join(projectPath, ".gitignore");
+  const gitgnore = fs.readFileSync(gitignorePath, "utf-8");
+  const result = gitgnore + "\nfunctions/render/__sapper__";
+  fs.writeFileSync(gitignorePath, result);
 }
 
 function installSapper() {
@@ -72,20 +81,7 @@ function modifyServer() {
 function addRenderFunction() {
   const renderFnPath = path.join(assets, "/functions");
   const destPath = path.join(projectPath, "/functions");
-  exec(`cp -R ${renderFnPath} ${destPath}`);
-}
-
-function exec(command) {
-  return new Promise((fulfil, reject) => {
-    child_process.exec(command, (err, stdout, stderr) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-
-      fulfil({ stdout, stderr });
-    });
-  });
+  exec(`cp -a ${renderFnPath} ${destPath}`);
 }
 
 function addPkgDependencies() {
@@ -114,4 +110,17 @@ function addPkgScript() {
 
   // Write the package JSON
   fs.writeFileSync(pkgJSONPath, JSON.stringify(packageJSON, null, "  "));
+}
+
+function exec(command) {
+  return new Promise((fulfil, reject) => {
+    child_process.exec(command, (err, stdout, stderr) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      fulfil({ stdout, stderr });
+    });
+  });
 }

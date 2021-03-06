@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "rm -rf my-app; sapper-netlify",
-    "test": "yarn cli; cd my-app; yarn install; yarn build-netlify; cd .."
+    "test": "yarn start test; cd test; yarn install; yarn build-netlify; cd .."
   },
   "keywords": [
     "sapper",
