@@ -19,7 +19,7 @@ async function run() {
 
   const staticPath = path.join(__dirname, "/../static/");
 
-  await exec(`cp -R ${staticPath} ${buildPath}/build`);
+  await exec(`cp -a ${staticPath}/. ${buildPath}/build`);
 
   fixServerImportsInRenderFunction();
 }
@@ -56,19 +56,3 @@ function exec(command) {
     });
   });
 }
-// "build": " cp _redirects __sapper__/build; cp -R static/ functions/noah/static; node test; cp -a static/. __sapper__/build/",
-
-// const fileName = "functions/noah/__sapper__/build/server/server.js";
-// fs.readFile(fileName, "utf8", function (err, data) {
-//   if (err) {
-//     return console.log(err);
-//   }
-//   var result = data.replace(
-//     `"__sapper__/build"`,
-//     `path.join(__dirname + "/..")`
-//   );
-
-//   fs.writeFile(fileName, result, "utf8", function (err) {
-//     if (err) return console.log(err);
-//   });
-// });

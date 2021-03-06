@@ -70,9 +70,9 @@ function modifyServer() {
 }
 
 function addRenderFunction() {
-  const renderFnPath = path.join(assets, "/render");
+  const renderFnPath = path.join(assets, "/functions");
   const destPath = path.join(projectPath, "/functions");
-  exec(`mkdir -p ${destPath} && cp -R ${renderFnPath} $_`);
+  exec(`cp -R ${renderFnPath} ${destPath}`);
 }
 
 function exec(command) {
