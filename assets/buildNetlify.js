@@ -21,6 +21,14 @@ async function run() {
 
   await exec(`cp -a ${staticPath}/. ${buildPath}/build`);
 
+  fs.writeFileSync(
+    `${buildPath}/build/_redirects`,
+    "/* /.netlify/functions/render 200",
+    {
+      encoding: "utf-8",
+    }
+  );
+
   fixServerImportsInRenderFunction();
 }
 

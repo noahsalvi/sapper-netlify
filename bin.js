@@ -30,8 +30,6 @@ async function run() {
 
   addFunctionBuildToGitignore();
 
-  addRedirects();
-
   addPkgScript();
 
   addBuildNetlifyScript();
@@ -56,12 +54,6 @@ function addBuildNetlifyScript() {
   const buildNetlify = path.join(assets, "buildNetlify.js");
   const scriptsPath = path.join(projectPath, "scripts");
   return exec(`cp ${buildNetlify} ${scriptsPath}`);
-}
-
-function addRedirects() {
-  const _redirects = path.join(assets, "_redirects");
-  const staticPath = path.join(projectPath, "static");
-  return exec(`cp ${_redirects} ${staticPath}`);
 }
 
 function addNetlifyToml() {
