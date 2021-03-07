@@ -2,25 +2,33 @@ const path = require("path");
 const fs = require("fs");
 const child_process = require("child_process");
 
-const buildPath = path.join(__dirname, "/../__sapper__");
-const functionsBuildPath = path.join(
-  __dirname,
-  "/../functions/render/__sapper__"
-);
+const buildPath = path.join(__dirname, "/../__sapper__/build");
+const functionsBuildPath = path.join(__dirname, "/../functions/render/build");
+const staticPath = path.join(__dirname, "/../static/");
 
 run();
 
 async function run() {
+  // Delete previous function build
   await exec(`rm -rf ${functionsBuildPath}`);
 
+  // Build the sapper project
   await exec(`npm run build`);
 
-  await exec(`cp -R ${buildPath} ${functionsBuildPath}`);
+  // Copy build to function
+  await exec(`rsync -av ${buildPath} ${functionsBuildPath} --exclude client`);
 
-  const staticPath = path.join(__dirname, "/../static/");
-
+  // Copy static files to project build
   await exec(`cp -a ${staticPath}/. ${buildPath}/build`);
 
+  // Add _redirects file to build folder (publish folder)
+  addRedirectsFile();
+
+  // Fix the path in the function server.js file to work with the project structure
+  fixBuildDirPathInServerFile();
+}
+
+function addRedirectsFile() {
   fs.writeFileSync(
     `${buildPath}/build/_redirects`,
     "/* /.netlify/functions/render 200",
@@ -28,15 +36,10 @@ async function run() {
       encoding: "utf-8",
     }
   );
-
-  fixServerImportsInRenderFunction();
 }
 
-function fixServerImportsInRenderFunction() {
-  const server = path.join(
-    __dirname,
-    "/../functions/render/__sapper__/build/server/server.js"
-  );
+function fixBuildDirPathInServerFile() {
+  const server = path.join(functionsBuildPath, "server/server.js");
 
   fs.readFile(server, "utf8", function (err, data) {
     if (err) return console.log(err);

@@ -40,7 +40,7 @@ async function run() {
 function addFunctionBuildToGitignore() {
   const gitignorePath = path.join(projectPath, ".gitignore");
   const gitgnore = fs.readFileSync(gitignorePath, "utf-8");
-  const result = gitgnore + "functions/render/__sapper__";
+  const result = gitgnore + "functions/render/build";
   fs.writeFileSync(gitignorePath, result);
 }
 
