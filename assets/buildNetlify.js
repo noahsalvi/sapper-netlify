@@ -16,10 +16,10 @@ async function run() {
   await exec(`npm run build`);
 
   // Copy build to function
-  await exec(`rsync -av ${buildPath} ${functionsBuildPath} --exclude client`);
+  await exec(`rsync -av ${buildPath}/ ${functionsBuildPath} --exclude client`);
 
   // Copy static files to project build
-  await exec(`cp -a ${staticPath}/. ${buildPath}/build`);
+  await exec(`cp -a ${staticPath}/. ${buildPath}`);
 
   // Add _redirects file to build folder (publish folder)
   addRedirectsFile();
@@ -29,13 +29,10 @@ async function run() {
 }
 
 function addRedirectsFile() {
-  fs.writeFileSync(
-    `${buildPath}/build/_redirects`,
-    "/* /.netlify/functions/render 200",
-    {
-      encoding: "utf-8",
-    }
-  );
+  const _redirectsPath = path.join(buildPath, "_redirects");
+  fs.writeFileSync(_redirectsPath, "/* /.netlify/functions/render 200", {
+    encoding: "utf-8",
+  });
 }
 
 function fixBuildDirPathInServerFile() {
