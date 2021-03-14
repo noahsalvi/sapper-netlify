@@ -45,8 +45,10 @@ function addFunctionBuildToGitignore() {
 }
 
 function installSapper() {
+  const filePath = args[0];
+  const additionalArgs = args[1] ? args[1] : "";
   return exec(
-    `npx degit "sveltejs/sapper-template#rollup" ${args[0]} ${args[1] ?? ""}`
+    `npx degit "sveltejs/sapper-template#rollup" ${filePath} ${additionalArgs}`
   );
 }
 
